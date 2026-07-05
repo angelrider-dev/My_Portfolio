@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+@theme {
+  /* --- Color tokens --- */
+  --color-bg: #0a0a0f;
+  --color-bg-soft: #101018;
+  --color-violet: #8b5cf6;
+  --color-cyan: #00e5ff;
+  --color-pink: #ff2e9a;
+  --color-text: #f2f0f5;
+  --color-text-dim: #8a8a9a;
+  --color-line: rgba(242, 240, 245, 0.08);
+
+  /* --- Font tokens --- */
+  --font-display: "Rajdhani", sans-serif;
+  --font-body: "Space Grotesk", sans-serif;
+  --font-urdu: "Noto Nastaliq Urdu", serif;
+
+  /* --- Motion tokens --- */
+  --ease-signature: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background: var(--color-bg);
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--color-pink);
+    color: var(--color-bg);
+  }
+
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--color-cyan);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
