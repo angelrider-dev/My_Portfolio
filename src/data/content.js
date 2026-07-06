@@ -29,7 +29,7 @@ export const journeyStops = [
 export const about = {
   stopLabel: "The Rider",
   paragraphs: [
-    "I'm a Computer Science undergrad at the University of Gujrat, spending most days split between the family store, the gym, and a laptop full of half-finished Flutter projects that are slowly becoming whole ones.",
+    "I'm a Computer Science undergrad at the University of Gujrat, spending most days split between the pitching new ideas, the gym, and a laptop full of half-finished Flutter projects that are slowly becoming whole ones.",
     "My focus right now is mobile + AI development — building apps that connect to real APIs, ship real features, and solve problems that actually matter where I'm from.",
     "I'm a Hafiz-e-Quran, which shapes how I think about discipline and routine more than any productivity app ever taught me.",
   ],
