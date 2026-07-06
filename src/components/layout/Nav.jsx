@@ -1,9 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { navLinks } from "../../data/content";
 
+const sectionIds = ["hero", "about", "skills", "projects", "poetry", "beyond", "contact"];
+
 function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeHref, setActiveHref] = useState("#hero");
+
+  useEffect(() => {
+    function handleScroll() {
+      let current = "hero";
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.5) current = id;
+      }
+      setActiveHref(`#${current}`);
+    }
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   function handleLinkClick() {
     setMenuOpen(false);
@@ -17,16 +36,35 @@ function Nav() {
 
       {/* Desktop nav */}
       <ul className="hidden md:flex gap-8">
-        {navLinks.map((link) => (
-          <li key={link.href}>
-            <a
-              href={link.href}
-              className="text-sm uppercase tracking-widest text-[color:var(--color-text-dim)] hover:text-[color:var(--color-cyan)] transition-colors"
-            >
-              {link.label}
-            </a>
-          </li>
-        ))}
+        {navLinks.map((link) => {
+          const isActive = activeHref === link.href;
+          return (
+            <li key={link.href}>
+              <a
+                href={link.href}
+                className={`relative text-sm uppercase tracking-widest transition-colors pb-1 ${
+                  isActive
+                    ? "text-[color:var(--color-cyan)]"
+                    : "text-[color:var(--color-text-dim)] hover:text-[color:var(--color-cyan)]"
+                }`}
+              >
+                {link.label}
+                {isActive && (
+                  <motion.span
+                    layoutId="nav-underline"
+                    className="absolute left-0 right-0 -bottom-[1px] h-[2px] rounded-full"
+                    style={{
+                      background:
+                        "linear-gradient(90deg, var(--color-cyan), var(--color-violet))",
+                      boxShadow: "0 0 8px var(--color-cyan)",
+                    }}
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+              </a>
+            </li>
+          );
+        })}
       </ul>
 
       {/* Mobile hamburger toggle */}
@@ -65,7 +103,11 @@ function Nav() {
                 <a
                   href={link.href}
                   onClick={handleLinkClick}
-                  className="text-sm uppercase tracking-widest text-[color:var(--color-text-dim)] hover:text-[color:var(--color-cyan)] transition-colors"
+                  className={`text-sm uppercase tracking-widest transition-colors ${
+                    activeHref === link.href
+                      ? "text-[color:var(--color-cyan)]"
+                      : "text-[color:var(--color-text-dim)] hover:text-[color:var(--color-cyan)]"
+                  }`}
                 >
                   {link.label}
                 </a>
